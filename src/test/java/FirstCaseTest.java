@@ -29,6 +29,7 @@ public class FirstCaseTest {
     public void httpGetPartialTest() {
         //успешный тест(206), проверка кода, проверка заголовка, не fluent
         RestAssured.responseSpecification = specifications.getResponseSpec();
+
         RequestSpecification request = given();
         request.baseUri("https://http.cat/206");
         request.header("range", "bytes=10-100");
@@ -42,6 +43,7 @@ public class FirstCaseTest {
     public void httpGetIncorrectTest() {
         //успешный тест(404), проверка кода
         RestAssured.responseSpecification = specifications.getResponseSpec();
+
         Response response = given()
                 .baseUri("https://fakestoreapi.com/")
                 .when().get("random");
@@ -53,6 +55,7 @@ public class FirstCaseTest {
     public void httpGetWithParamTest() {
         //неуспешный тест(200 , json), проверка кода, проверка заголовка, параметр limit
         RestAssured.responseSpecification = specifications.getResponseSpec();
+
         Response response = given()
                 .baseUri("https://fakestoreapi.com/")
                 .queryParam("limit",5)
@@ -69,8 +72,9 @@ public class FirstCaseTest {
         //успешный тест(200, Luke Skywalker), проверка тела ответа
         RestAssured.responseSpecification = specifications.getResponseSpec();
         PersonData lukeSkywalker = new PersonData("Luke Skywalker","172");
+
         PersonData person = given()
-        .baseUri("https://swapi.dev/api/")
+                .baseUri("https://swapi.dev/api/")
                 .when().get("people/1")
                 .then().log().all()
                 .extract().body().as(PersonData.class);
@@ -82,6 +86,7 @@ public class FirstCaseTest {
         //успешный тест(200, Luke Skywalker), проверка тела ответа(как List)
         RestAssured.responseSpecification = specifications.getResponseSpec();
         PersonData lukeSkywalker = new PersonData("Luke Skywalker","172");
+
         List<PersonData> person = given()
                 .baseUri("https://swapi.dev/api/")
                 .when().get("people/")
